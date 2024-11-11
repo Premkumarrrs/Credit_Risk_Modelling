@@ -57,14 +57,23 @@ A thorough examination of the dataset is performed to understand its structure, 
 * **1.3 Creating Dummy Variables for Discrete Variables**
 
 Discrete variables are categorical in nature and need to be converted into numerical format for modeling purposes. This is done by creating dummy variables for all discrete variables in the dataset. The variables that are processed include:
-* grade: Assigned loan grade.
-* sub_grade: Loan subgrade assigned by LendingClub.
-* home_ownership: Borrower's homeownership status (values: RENT, OWN, MORTGAGE, OTHER).
-* loan_status: The loan's current status (values: Charged Off, Current, Default, Fully Paid, etc.).
-* addr_state: Borrower's state of residence.
-* verification_status: Indicates whether borrower’s income was verified.
-* purpose: Purpose of the loan as specified by the borrower.
-* initial_list_status: The initial listing status of the loan (values: W, F).
+
+grade: Assigned loan grade.
+
+sub_grade: Loan subgrade assigned by LendingClub.
+
+home_ownership: Borrower's homeownership status (values: RENT, OWN, MORTGAGE, OTHER).
+
+loan_status: The loan's current status (values: Charged Off, Current, Default, Fully Paid, etc.).
+
+addr_state: Borrower's state of residence.
+
+verification_status: Indicates whether borrower’s income was verified.
+
+purpose: Purpose of the loan as specified by the borrower.
+
+initial_list_status: The initial listing status of the loan (values: W, F).
+
 Dummy variables are created for each of these categorical variables to allow the model to process them efficiently.
 
 * **1.4 Concatenating Dummy Variables**
@@ -74,17 +83,24 @@ The newly created dummy variables are concatenated with the original dataset, en
 * **1.5 Converting Date Formats**
 
 For variables that contain date information, the dates are converted into meaningful numerical features:
-* earliest_cr_line: This represents the date the borrower's earliest reported credit line was opened. The column is transformed into mths_since_earliest_cr_line to represent the number of months since this credit line was opened, using December 2017 as a reference point. Any future dates are adjusted to the maximum valid value within the dataset, and negative values are treated as data inconsistencies and adjusted to maintain data integrity.
-* emp_length: Employment length in years, transformed into an integer column emp_length_int. Values range from 0 to 10, where 0 represents less than one year of employment and 10 represents 10 years or more.
-* term: The term of the loan in months, transformed into term_int.
-* issue_d: The loan issue date, transformed into mths_since_issue_d, which calculates the months since the loan was issued relative to December 2017.
+
+earliest_cr_line: This represents the date the borrower's earliest reported credit line was opened. The column is transformed into mths_since_earliest_cr_line to represent the number of months since this credit line was opened, using December 2017 as a reference point. Any future dates are adjusted to the maximum valid value within the dataset, and negative values are treated as data inconsistencies and adjusted to maintain data integrity.
+
+emp_length: Employment length in years, transformed into an integer column emp_length_int. Values range from 0 to 10, where 0 represents less than one year of employment and 10 represents 10 years or more.
+
+term: The term of the loan in months, transformed into term_int.
+
+issue_d: The loan issue date, transformed into mths_since_issue_d, which calculates the months since the loan was issued relative to December 2017.
 
 * **1.6 Handling Missing Values**
 
 Any missing or null values in the dataset are carefully handled. This may include:
-* Imputing missing values with appropriate techniques (mean, median, or mode imputation).
-* Dropping rows or columns with excessive missing data.
-* Ensuring that the dataset is complete for model training.
+
+Imputing missing values with appropriate techniques (mean, median, or mode imputation).
+
+Dropping rows or columns with excessive missing data.
+
+Ensuring that the dataset is complete for model training.
 
 * **1.7 Setting the Target Variable**
 
@@ -137,8 +153,10 @@ The WoE plot provides a visual representation of the predictive strength for eac
 **Fine and Coarse Classing**
 
 To enhance the predictive strength of continuous variables, Fine Classing and Coarse Classing are applied based on the insights we got from calculating and plotting the WoE.
-* Fine Classing: Creates 10 to 20 bins/groups for a continuous variable, allowing for a detailed calculation of WoE and IV. Each bin represents a small range of the continuous variable, capturing subtle changes in predictive power.
-* Coarse Classing: Groups adjacent bins with similar WoE scores, reducing the number of bins. This technique provides a simplified and aggregated view of the variable, reducing noise and making the model more interpretable.
+
+Fine Classing: Creates 10 to 20 bins/groups for a continuous variable, allowing for a detailed calculation of WoE and IV. Each bin represents a small range of the continuous variable, capturing subtle changes in predictive power.
+
+Coarse Classing: Groups adjacent bins with similar WoE scores, reducing the number of bins. This technique provides a simplified and aggregated view of the variable, reducing noise and making the model more interpretable.
 
 * **10.11 Exporting Preprocessed Data**
      
