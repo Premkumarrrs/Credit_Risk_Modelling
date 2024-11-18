@@ -41,124 +41,30 @@ Project Deliverables
 
 The project uses a dataset of over 800,000 LendingClub loans (sourced from Kaggle) issued between 2007 and 2015. The data is split into training (2007–2014) and validation (2015) sets to ensure that the model performs well on recent data, confirming that predictions remain accurate as market dynamics evolve.
 Dataset - https://www.kaggle.com/datasets/premkumarrrs1411/credit-risk-modelling-loan-data/data
-                                                                                                
-## Preprocessing - Data Preparation and Transformation
 
-The preprocessing stage of this project involves transforming the raw dataset into a clean, structured format suitable for building a predictive model. This process includes handling categorical variables, dealing with missing data, and performing necessary transformations for feature engineering, particularly for credit risk modeling. Below are the key steps followed in this stage.
 
-* **1.1 Importing Data**
+## Pipeline - 
+* Preprocessing:
+Creation of dummy variables.
+Calculation of Weight of Evidence (WoE) and Information Value (IV).
+Fine and coarse classing of variables.
 
-The dataset is loaded from its source (e.g., CSV or database) and made ready for exploration and analysis.
+* Probability of Default (PD), Scorecard, and Credit Score Cutoffs:
+Development of the PD model using logistic regression.
+Conducting statistical validation tests.
+Building the scorecard.
+Determining the cutoff rate for accepting credit demand.
 
-* **1.2 Exploring Data**
+* Loss Given Default (LGD), Exposure at Default (EAD), and Expected Loss (EL) Calculation:
+LGD modeling with beta regression.
+EAD modeling with linear regression.
+Calculation of expected loss.
+Evaluation of model performance.
 
-A thorough examination of the dataset is performed to understand its structure, variables, and basic statistics. This step helps identify any data quality issues such as missing values, duplicates, or inconsistencies.
+* Monitoring - Population Stability Index (PSI):
+Assessing whether the model performs well with new data over time.
+                                                                                               
 
-* **1.3 Creating Dummy Variables for Discrete Variables**
-
-Discrete variables are categorical in nature and need to be converted into numerical format for modeling purposes. This is done by creating dummy variables for all discrete variables in the dataset. The variables that are processed include:
-
-grade: Assigned loan grade.
-
-sub_grade: Loan subgrade assigned by LendingClub.
-
-home_ownership: Borrower's homeownership status (values: RENT, OWN, MORTGAGE, OTHER).
-
-loan_status: The loan's current status (values: Charged Off, Current, Default, Fully Paid, etc.).
-
-addr_state: Borrower's state of residence.
-
-verification_status: Indicates whether borrower’s income was verified.
-
-purpose: Purpose of the loan as specified by the borrower.
-
-initial_list_status: The initial listing status of the loan (values: W, F).
-
-Dummy variables are created for each of these categorical variables to allow the model to process them efficiently.
-
-* **1.4 Concatenating Dummy Variables**
-
-The newly created dummy variables are concatenated with the original dataset, ensuring that the dataset now contains both the original and the transformed features for further analysis and modeling.
-
-* **1.5 Converting Date Formats**
-
-For variables that contain date information, the dates are converted into meaningful numerical features:
-
-earliest_cr_line: This represents the date the borrower's earliest reported credit line was opened. The column is transformed into mths_since_earliest_cr_line to represent the number of months since this credit line was opened, using December 2017 as a reference point. Any future dates are adjusted to the maximum valid value within the dataset, and negative values are treated as data inconsistencies and adjusted to maintain data integrity.
-
-emp_length: Employment length in years, transformed into an integer column emp_length_int. Values range from 0 to 10, where 0 represents less than one year of employment and 10 represents 10 years or more.
-
-term: The term of the loan in months, transformed into term_int.
-
-issue_d: The loan issue date, transformed into mths_since_issue_d, which calculates the months since the loan was issued relative to December 2017.
-
-* **1.6 Handling Missing Values**
-
-Any missing or null values in the dataset are carefully handled. This may include:
-
-Imputing missing values with appropriate techniques (mean, median, or mode imputation).
-
-Dropping rows or columns with excessive missing data.
-
-Ensuring that the dataset is complete for model training.
-
-* **1.7 Setting the Target Variable**
-
-The loan_status variable is set as the dependent (target) variable, indicating whether a loan was paid off or defaulted. This variable is crucial for credit risk prediction and will serve as the model’s output.
-
-* **1.8 Splitting Data into Training and Testing Sets**
-
-The dataset is split into training and testing subsets to ensure that the model is trained on one set of data and validated on another. This helps to assess the generalizability of the model and avoid overfitting.
-
-* **1.9 Weight of Evidence (WoE) and Information Value (IV) Calculation**
-
-To improve model performance and interpretability, Weight of Evidence (WoE) and Information Value (IV) are calculated for both discrete and continuous variables.
-
-* WoE Calculation: Measures the strength of a variable in predicting the target by comparing the distribution of "Goods" (non-events) to "Bads" (events). It is calculated for each bin of a variable.
-
-Formula for WoE:    **WoE= ln {{Distribution of Goods}/{{Distribution of Bads}}**
-
-Key Interpretation:
-
-Positive WoE: Indicates that the distribution of “Goods” (e.g., non-defaults) is greater than the distribution of “Bads” (e.g., defaults).
-Negative WoE: Indicates that the distribution of “Goods” is less than the distribution of “Bads.”
-Calculation Rule of Thumb: The logarithmic function in WoE means:
-If the log is greater than 1, the WoE is positive.
-If the log is less than 1, the WoE is negative.
-
-* IV Calculation: Measures the predictive power of an independent variable, helping identify which features are most important for the target variable. The IV is computed for each variable by summing the contribution of each bin based on WoE values.
-
-Formula for IV:     **IV = ∑ (% of non-events - % of events) * WOE**
-
-IV Categories:
-
- IV < 0.02: Not useful for prediction.
-
- 0.02 ≤ IV < 0.1: Weak predictive power.
-
- 0.1 ≤ IV < 0.3: Medium predictive power.
-
- 0.3 ≤ IV < 0.5: Strong predictive power.
-
- IV > 0.5: Suspiciously high predictive power, suggesting potential overfitting.
-
-These steps ensure that features with high predictive power are retained, while reducing noise from less relevant features.
-
-Using WoE and IV, we can identify the most relevant predictors, transform continuous variables effectively, and simplify the model-building process for interpretability and compliance with regulatory requirements. Both metrics are essential in credit risk modeling, especially when evaluating the likelihood of default, as they provide transparency and consistency in scoring model variables.
-
-* **1.10 Interpreting WoE Plot:** 
-
-The WoE plot provides a visual representation of the predictive strength for each bin of a variable. Positive WoE values indicate that a bin is more likely associated with “Goods” (non-default), whereas negative WoE values suggest a stronger likelihood of being associated with “Bads” (default). Consistent patterns in WoE values across bins signal a strong predictor, whereas erratic WoE patterns may indicate noise or non-informative features.
-
-**Fine and Coarse Classing**
-
-To enhance the predictive strength of continuous variables, Fine Classing and Coarse Classing are applied based on the insights we got from calculating and plotting the WoE.
-
-Fine Classing: Creates 10 to 20 bins/groups for a continuous variable, allowing for a detailed calculation of WoE and IV. Each bin represents a small range of the continuous variable, capturing subtle changes in predictive power.
-
-Coarse Classing: Groups adjacent bins with similar WoE scores, reducing the number of bins. This technique provides a simplified and aggregated view of the variable, reducing noise and making the model more interpretable.
-
-* **10.11 Exporting Preprocessed Data**
      
 
 
