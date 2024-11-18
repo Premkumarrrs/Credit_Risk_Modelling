@@ -45,6 +45,7 @@ Dataset - https://www.kaggle.com/datasets/premkumarrrs1411/credit-risk-modelling
 
 ## Pipeline - 
 * Preprocessing:
+
 Creation of dummy variables.
 
 Calculation of Weight of Evidence (WoE) and Information Value (IV).
