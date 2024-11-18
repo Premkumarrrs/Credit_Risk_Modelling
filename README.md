@@ -46,22 +46,33 @@ Dataset - https://www.kaggle.com/datasets/premkumarrrs1411/credit-risk-modelling
 ## Pipeline - 
 * Preprocessing:
 Creation of dummy variables.
+
 Calculation of Weight of Evidence (WoE) and Information Value (IV).
+
 Fine and coarse classing of variables.
 
 * Probability of Default (PD), Scorecard, and Credit Score Cutoffs:
+
 Development of the PD model using logistic regression.
+
 Conducting statistical validation tests.
+
 Building the scorecard.
+
 Determining the cutoff rate for accepting credit demand.
 
 * Loss Given Default (LGD), Exposure at Default (EAD), and Expected Loss (EL) Calculation:
+
 LGD modeling with beta regression.
+
 EAD modeling with linear regression.
+
 Calculation of expected loss.
+
 Evaluation of model performance.
 
 * Monitoring - Population Stability Index (PSI):
+
 Assessing whether the model performs well with new data over time.
                                                                                                
 ## FYI - Self-explanatory notes and interpretations, along with codes. ##
