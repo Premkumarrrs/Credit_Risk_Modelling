@@ -1,6 +1,6 @@
 # Project Summary
 
-This project measures the credit risk model for LendingClub, a leading peer-to-peer lending company in the U.S., following major regulatory standards like Basel III, IFRS 9, and CEBS guidelines. The goal is to create a daily-use credit scoring tool that calculates the risk of borrower defaults and assesses potential financial losses for LendingClub. This model aims to enhance decision-making and ensure compliance with credit risk management regulations.
+This project measures the credit risk model for LendingClub, a leading peer-to-peer lending company in the U.S. The goal is to create a daily-use credit scoring tool that calculates the risk of borrower defaults and assesses potential financial losses for LendingClub. This model aims to enhance decision-making and ensure compliance with credit risk management regulations.
 
 **To make the project accessible to all, let’s define the key concepts:**
 
